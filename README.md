@@ -51,6 +51,7 @@ We made a judgement to remove `email_address` from our feature set, as a cursory
 
 To give a better semblence of normalization between some of these numbers, I created a number of additional features:
 
+* `deferred_ratio` : ratio of `deferral_payments` to `total_payments`
 * `message_ratio` : ratio of outgoing messages `to_messages' to incoming messages `from_messages`.
 * `poi_from_ratio` : ratio of incoming messages from a person of interest, or `from_poi_to_this_person` divided by `from_messages`.
 *  `poi_to_ratio` : ratio of outgoing messages to a person of interest, or `from_this_person_to_poi` divided by `to_messages`.
