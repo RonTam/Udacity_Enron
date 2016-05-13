@@ -11,6 +11,8 @@ As a consequence of the investigations into Enron, federal regulators released m
 ### Data Introduction
 The data that we will explore in this project is constructed as a dictionary of feature values, where each key of the dictionary is represented by one of 146 Enron executives.  The initial feature set consists of 20 independent variables, comprising of both financial data as well as email statistics of the individuals named.  A boolean valued variable: "poi", captures the true labeled status of each person.
 
+We observe that only 18 of the 146 data points contain a person of interest, meaning that a generic model where all points are set to False will achieve an accuracy of 87.67%.  As such, our work will focus more on Precision and Recall as metrics instead of the simpler scores of Accuracy.
+
 Below is a sample row of the dictionary of features: 
 
 	[{'ALLEN PHILLIP K': {'bonus': 4175000,
@@ -36,6 +38,11 @@ Below is a sample row of the dictionary of features:
   						'total_stock_value': 1729541}]
 
 ### Exploratory Data Analysis
-Given no domain knowledge on the Enron scandal (beyond information that is readily available on the web), it is difficult to choose an optimal subset of features.  However, as our dataset is relatively small, we can take advantage of some brute force techniques in finding optimal features.  Before we engage in this endeavor, a perfunctory scan of our dataset revealed some outliers and questionable datapoints.  
+Given no domain knowledge on the Enron scandal (beyond information that is readily available on the web), it is difficult to choose an optimal subset of features.  However, as our dataset is relatively small, we can take advantage of some brute force techniques in finding optimal variable.  Before we engage in this endeavor, a perfunctory scan of our dataset revealed some outliers and questionable data points.  
 
-The keys `TOTAL` and `THE TRAVEL AGENCY IN THE PARK` do not appear to be actual people (scatterplots of values from `TOTAL` can confirm it as an aberation), and are thus removed from our data.  Additionally, an executive named `LOCKHART EUGENE E` contains an empty dictionary with no usable information, and as such that point is also removed.
+The keys `TOTAL` and `THE TRAVEL AGENCY IN THE PARK` do not appear to be actual people (scatterplots of values from `TOTAL` can confirm it as an aberration), and are thus removed from our data.  Additionally, an executive named `LOCKHART EUGENE E` contains an empty dictionary with no usable information, and as such that point is also removed.
+
+Next, we observe that our dataset contains many `NaN` values, which will have to be addressed prior to modeling.  For the sake of simplicity, we replace all `NaN` with `-999`, while acknowledging that more sophisticated methods of imputation might have resulted in accuracy gains in our modeling.
+
+#### Feature Creation
+
