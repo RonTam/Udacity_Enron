@@ -55,3 +55,15 @@ To give a better semblence of normalization between some of these numbers, I cre
 * `message_ratio` : ratio of outgoing messages `to_messages' to incoming messages `from_messages`.
 * `poi_from_ratio` : ratio of incoming messages from a person of interest, or `from_poi_to_this_person` divided by `from_messages`.
 *  `poi_to_ratio` : ratio of outgoing messages to a person of interest, or `from_this_person_to_poi` divided by `to_messages`.
+
+#### Feature Selection
+
+A number of feature selection techniques were considered for this project.  First, we 
+
+
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
