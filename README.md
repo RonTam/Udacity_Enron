@@ -62,8 +62,28 @@ A number of feature selection techniques were considered for this project.  Firs
 
 
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| Feature_Names        		| Feature_Importance    |
+| -----------------------	|:---------------------:|
+| other      				| 0.107346				|
+| total_stock_value    		| 0.090469				|
+| expenses	 		     	| 0.080059	 			|
+| message_ratio				| 0.072827				|		
+| bonus						| 0.072018				|
+| exercised_stock_options	| 0.060140				|
+| salary					| 0.058832				|
+| shared_receipt_with_poi	| 0.056311				|
+| deferred_income			| 0.051368				|
+| restricted_stock 			| 0.049847				|	
+| total_payments 			| 0.048884				|
+| to_messages 				| 0.045440				|
+| deferred_ratio			| 0.038757				|
+| long_term_incentive		| 0.033897				|
+| from_poi_to_this_person 	| 0.028768				|
+| poi_to_ratio				| 0.028362				|
+| poi_from_ratio			| 0.024700				|
+| from_messages				| 0.022333				|		
+| from_this_person_to_poi	| 0.019868				|
+| deferral_payments			| 0.009680 				|
+| director_fees				| 0.000092				|
+| restricted_stock_deferred | 0.000000 				|
+| loan_advances				| 0.000000 				|
