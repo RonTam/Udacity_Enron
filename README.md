@@ -35,3 +35,7 @@ Below is a sample row of the dictionary of features:
   						'total_payments': 4484442,
   						'total_stock_value': 1729541}]
 
+### Exploratory Data Analysis
+Given no domain knowledge on the Enron scandal (beyond information that is readily available on the web), it is difficult to choose an optimal subset of features.  However, as our dataset is relatively small, we can take advantage of some brute force techniques in finding optimal features.  Before we engage in this endeavor, a perfunctory scan of our dataset revealed some outliers and questionable datapoints.  
+
+The keys `TOTAL` and `THE TRAVEL AGENCY IN THE PARK` do not appear to be actual people (scatterplots of values from `TOTAL` can confirm it as an aberation), and are thus removed from our data.  Additionally, an executive named `LOCKHART EUGENE E` contains an empty dictionary with no usable information, and as such that point is also removed.
