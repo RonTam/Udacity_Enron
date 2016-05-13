@@ -58,8 +58,7 @@ To give a better semblence of normalization between some of these numbers, I cre
 
 #### Feature Selection
 
-A number of feature selection techniques were considered for this project.  First, we 
-
+A number of feature selection techniques were considered for this project.  First, we ran a Random Forest Classifier over our data and used the resulting model to discover feature importance.  Limiting each node to a square root of params, the resulting order of important features are listed below:
 
 
 | Feature_Names        		| Feature_Importance    |
@@ -87,3 +86,5 @@ A number of feature selection techniques were considered for this project.  Firs
 | director_fees				| 0.000092				|
 | restricted_stock_deferred | 0.000000 				|
 | loan_advances				| 0.000000 				|
+
+Taking a subset of the most important features, we ran choose a subset of the most important features for our model build.  This process is often more art than science, and several attempts were made to find some optimal dividing point for features.  While the ensuing performance was relatively decent, we could not find a suitable combination of models using this feature ordering that achieved a recall and precision above 0.3 (a goal that we had set as part of this project).  As such, we could not use the method for choosing the optimal features.
