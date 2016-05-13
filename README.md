@@ -87,9 +87,9 @@ A number of feature selection techniques were considered for this project.  Firs
 | restricted_stock_deferred | 0.000000 				|
 | loan_advances				| 0.000000 				|
 
-Taking a subset of the most important features, we randomly chose a subset of the most important features for our model build.  This process is often more art than science, and numerous attempts were made to find some optimal dividing point for features.  While the ensuing performance was relatively decent, we could not find a suitable combination of models using this feature ordering that achieved a recall and precision above 0.3 (a goal that we had set as part of this project).  As such, we could not use the method for choosing the optimal features.
+Taking the ordered list, we randomly chose a subset of the most important features for our model build.  This process is often more art than science, and numerous attempts were made to find some optimal dividing point for features.  While the ensuing performance was relatively decent, we could not find a suitable combination of models using this feature ordering that achieved a recall and precision above 0.3 (a goal that we had set as part of this project).  As such, we could not use the method for choosing the optimal features.
 
-We use a number of more sophisticated techniques to find better features for our model, the details of which can be found in the accompanying jupyter notebook.  These included using SelectKBest algorithms, feature transformations using PCA, and a combination of SelectKBest and PCA using FeatureUnion, with a pipeline that exhustively searched for the best features via Grid Search Cross Validation.  While considerably more time consuming, the overal precisions continued to drift slightly below 0.3.
+We use a number of more sophisticated techniques to find better features for our model, the details of which can be found in the accompanying jupyter notebook.  These included using SelectKBest algorithms, feature transformations using PCA, and a combination of SelectKBest and PCA using FeatureUnion, with a pipeline that exhustively searched for the best features via Grid Search Cross Validation.  While considerably more time consuming, the overal precisions continued to drift slightly below 0.3  (it is very well feasible that these features would work with more sophisticated models like XGBoost, but for the sake of feature selection the resulting precisions/recalls were based off of simpler classification models).
 
 Finally, I split the features up to consider messages versus financials.  Interestingly, both sets of features tested well using basic ML models.  In particular, I found very strong performance using only the features from email messages, while completely ignoring the numbers from the financials.  As such, the resulting feature set that I used for model building contained the following features:
 
@@ -101,3 +101,19 @@ Finally, I split the features up to consider messages versus financials.  Intere
 * `message_ratio`
 * `poi_from_ratio`
 * `poi_to_ratio`
+
+### Model Building And Analysis
+
+A number of algorithms were attempted in the search for the optimal model.  To parameterize our model, we use Grid Search Cross Validation to exhaustively search through possible hyperparameters.  The results of our testing is presented below:
+
+| Algorithm        		| Accuracy      |	Precision 	| Recall   	|
+| ----------------------|---------------|---------------|-----------|
+| Random Forest			| 0.86027 		| 0.34328     	| 0.05750	|		
+| Logistic Regression	|     		
+| Naive Bayes			| 0.77240 		| 0.27441		| 0.43000	|
+| AdaBoost				| 0.83193 		| 0.29633 		| 0.18950 	|
+| 	 		     	
+
+### Conclusion
+
+### References
