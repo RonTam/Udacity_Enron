@@ -127,47 +127,8 @@ clf = LogisticRegression(class_weight='balanced', n_jobs=-1, C=100000000000L, pe
 ##
 ## clf = AdaBoostClassifier()
 ##
-
-'''
-pca = PCA()
-selection = SelectKBest()
-combined_features = FeatureUnion([('pca',pca),('univ_select',selection)])
-
-#combined_features = FeatureUnion([('univ_select',selection)])
-#clf = LogisticRegression(class_weight='balanced')
-#param_grid = dict(features__univ_select__k=[12,16,20],
-#		logistic__C=[1000000000000L])
-
-pipeline = Pipeline([('features',combined_features),('logistic',clf)])
-param_grid = dict(features__pca__n_components = [12,16,20],
-		features__univ_select__k=[8,12,16,20],
-		logistic__C=[1000000000000000L])
-
-#clf = GridSearchCV(pipeline, param_grid=param_grid, verbose=10, scoring='precision')
-# Provided to give you a starting point. Try a variety of classifiers.
-
-#pca = PCA()
-#n_components = [4,8,10,13]
-
-#clf = DecisionTreeClassifier(min_samples_split=5)
-
-'''
-
-
-######### Random Forest #########################
-#clf = RandomForestClassifier(min_samples_split=5)
-#pipe = Pipeline(steps=[('pca',pca),('rf',clf)])
-
-#clf = GridSearchCV(pipe,dict(pca__n_components=n_components))
-#################################################
-
-######### Logistic Classification ###############
-#clf = LogisticRegression()
-#pipe = Pipeline(steps=[('logistic',clf)])
-#Cs = np.logspace(-4, 4, 6)
-
-#clf = GridSearchCV(pipe,dict(logistic__C=Cs))
-#################################################
+####################################################################
+####################################################################
 
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall 
 ### using our testing script. Check the tester.py script in the final project
