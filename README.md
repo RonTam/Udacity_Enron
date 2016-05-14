@@ -109,7 +109,7 @@ A number of algorithms were attempted in the search for the optimal model.  To p
 | Algorithm        		| Accuracy      |	Precision 	| Recall   	|
 | ----------------------|---------------|---------------|-----------|
 | Random Forest			| 0.86027 		| 0.34328     	| 0.05750	|		
-| Logistic Regression	|     		
+| Logistic Regression	| 0.79973    	| 0.33322		| 0.50150 	|
 | Naive Bayes			| 0.77240 		| 0.27441		| 0.43000	|
 | AdaBoost				| 0.83193 		| 0.29633 		| 0.18950 	|
 | 	 		     	
