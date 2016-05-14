@@ -58,7 +58,7 @@ To give a better semblence of normalization between some of these numbers, I cre
 
 #### Feature Selection
 
-A number of feature selection techniques were considered for this project.  First, we ran a Random Forest Classifier over our data and used the resulting model to discover feature importance.  Limiting each node to a square root of params, the resulting order of important features are listed below:
+A number of feature selection techniques were considered for this project.  First, we ran a Random Forest Classifier over our data and used the resulting model to discover feature importance.  As a robust emsemble method, Random Forest does not require feature scaling and is very flexible in dealing with potentially messay feature relationships, as such it is often a good plug-and-play model for feature selection or performance benchmarking.  Limiting each node to a square root of params, the resulting order of important features are listed below:
 
 
 | Feature_Names        		| Feature_Importance    |
@@ -102,18 +102,26 @@ Finally, I split the features up to consider messages versus financials.  Intere
 * `poi_from_ratio`
 * `poi_to_ratio`
 
-### Model Building And Analysis
+We do no feature scaling for this dataset.  As will be demonstrated later, feature scaling is not required for Logistic Regression.  Furthermore, the added ratios give more normalized depth to the absolute messages data.
+
+### Model Building, Validation, And Analysis
 
 A number of algorithms were attempted in the search for the optimal model.  To parameterize our model, we use Grid Search Cross Validation to exhaustively search through possible hyperparameters.  The results of our testing is presented below:
 
 | Algorithm        		| Accuracy      |	Precision 	| Recall   	|
 | ----------------------|---------------|---------------|-----------|
 | Random Forest			| 0.86027 		| 0.34328     	| 0.05750	|		
-| Logistic Regression	| 0.79973    	| 0.33567		| 0.50250 	|
+| Logistic Regression	| 0.80360    	| 0.34095		| 0.50700 	|
 | Naive Bayes			| 0.77240 		| 0.27441		| 0.43000	|
 | AdaBoost				| 0.83193 		| 0.29633 		| 0.18950 	|
 
-While Random Forest yielded the best total accuracy, it's recall metric was very poor.  Alternatively, Logistic Regression performed very well with our data.  We ran a number of parameter permutations through Grid Search and found an optimal model using a C = 100000000000, class_weight = balanced, and a penalty measured by l2 norm. 	 		     	
+Before we go into more detail about these numbers, it's first prudent to explain how the numbers were achieved.  We relied on the algorithm given by tester.py, which uses a Stratified Shuffle Split for Cross Validation.  The folds (1000) are made by preserving the percentage of samples for each class, meaning that we can ensure a small number of actual persons of interest in each fold we use for training and testing.  This is important in cases where there exist a large imbalance between the classified labels in the data (as we have in this project).  In addition, the splitting factor uses a randomized permutation across the folds.  
+
+For example, given a 5-Fold Stratified Shuffle Split, the data will be trained on 4 randomized permutation folds, in which each fold randomly contains one fifth of the data, while preserving as much as possible the poi to non-poi ratio within that fold.  Those 4 folds will then be used to fit our modeled algorithm, and the fifth fold to be used for predict.  This process iterates through with each fold representing the test set once, and the resulting accuracies are averaged into the scores we see above.  
+
+As mentioned before, accuracy score does not represent a suitable metric for measuring the performance of our models.  As such we rely on Precision and Recall.  Precision is the number of True Positives (the number of POIs correctly identified) divided by the total number of POIs labeled from our model (TP + FP).  Alternatively, recall represents the number of True Positives divided by the number of actual POIs from our data (TP + FN).  Together, these often give a better depiction on the strength of a model when the classes are strongly imbalanced.
+
+Now let's finally look at our results.  While Random Forest yielded the best total accuracy, it's recall metric was very poor.  Alternatively, Logistic Regression performed very well with our data.  We ran a number of parameter permutations through Grid Search and found an optimal model using a C = 100000000000, class_weight = balanced, and a penalty measured by l2 norm. 	 		     	
 
 ### Conclusion
 
