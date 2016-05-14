@@ -6,7 +6,7 @@
 ### Introduction
 Once a darling of Wall Street, Enron is better known today as a symbol of corporate fraud and corruption.  The scandal highlighted the dangers of creative accounting practices and pointed a spotlight at regulators to find ways to avoid future catastrophies from corporate misdeeds.
 
-As a consequence of the investigations into Enron, federal regulators released mountains of information (typically confidential) regarding the activities of company executives prior to the firm's dissolution.  In this project, we will study a subset of these documents, to see whether we can identify a "person of interest" based on data gathered on a number of company executives.  We will build a number of machine learning models to predict whether an individual is considered a person of interest, and analyze the accuracy of our results.  
+As a consequence of the investigations into Enron, federal regulators released mountains of information (typically confidential) regarding the activities of company executives prior to the firm's dissolution.  In this project, we will study a subset of these documents, to see whether we can identify a "person of interest" based on data gathered on a number of company executives.  We will build a number of machine learning models to predict whether an individual is considered a person of interest, and analyze the accuracy of our results.  Having a good model may pave the way of identifying potential "Enrons" in the future, as corporate accounting continue to get increasingly more complex in our evolving financial landscape.
 
 ### Data Introduction
 The data that we will explore in this project is constructed as a dictionary of feature values, where each key of the dictionary is represented by one of 146 Enron executives.  The initial feature set consists of 20 independent variables, comprising of both financial data as well as email statistics of the individuals named.  A boolean valued variable: "poi", captures the true labeled status of each person.
@@ -117,7 +117,7 @@ A number of algorithms were attempted in the search for the optimal model.  To p
 
 Before we go into more detail about these numbers, it's first prudent to explain how the numbers were achieved.  We relied on the algorithm given by tester.py, which uses a Stratified Shuffle Split for Cross Validation.  The folds (1000) are made by preserving the percentage of samples for each class, meaning that we can ensure a small number of actual persons of interest in each fold we use for training and testing.  This is important in cases where there exist a large imbalance between the classified labels in the data (as we have in this project).  In addition, the splitting factor uses a randomized permutation across the folds.  
 
-For example, given a 5-Fold Stratified Shuffle Split, the data will be trained on 4 randomized permutation folds, in which each fold randomly contains one fifth of the data, while preserving as much as possible the poi to non-poi ratio within that fold.  Those 4 folds will then be used to fit our modeled algorithm, and the fifth fold to be used for predict.  This process iterates through with each fold representing the test set once, and the resulting accuracies are averaged into the scores we see above.  
+For example, given a 5-Fold Stratified Shuffle Split, the data will be trained on 4 randomized permutation folds, in which each fold randomly contains one fifth of the data, while preserving as much as possible the poi to non-poi ratio within that fold.  Those 4 folds will then be used to fit our modeled algorithm, and the fifth fold to be used for prediction.  This process iterates through with each fold representing the test set once, and the resulting accuracies are averaged into the scores we see above.  
 
 As mentioned before, accuracy score does not represent a suitable metric for measuring the performance of our models.  As such we rely on Precision and Recall.  Precision is the number of True Positives (the number of POIs correctly identified) divided by the total number of POIs labeled from our model (TP + FP).  Alternatively, recall represents the number of True Positives divided by the number of actual POIs from our data (TP + FN).  Together, these often give a better depiction on the strength of a model when the classes are strongly imbalanced.
 
@@ -125,4 +125,9 @@ Now let's finally look at our results.  While Random Forest yielded the best tot
 
 ### Conclusion
 
+In this project, we explored email statistics and financial compensations for a number of Enron executives, in order to predict "persons of interests" that may be associated with the famous Enron Scandal.  Our data exploration involved basic exploratory data analysis, including feature selection and outlier detection.  We then fit a number of classic machine learning models to our data, and found one that performed optimally given our environment set up.  
+
 ### References
+
+[sklearn documentation](http://scikit-learn.org/stable/documentation.html)
+[Enron Scandal](https://en.wikipedia.org/wiki/Enron_scandal)
