@@ -129,7 +129,9 @@ Now let's finally look at our results.  While Random Forest yielded the best tot
 
 ### Conclusion
 
-In this project, we explored email statistics and financial compensations for a number of Enron executives, in order to predict "persons of interests" that may be associated with the famous Enron Scandal.  Our data exploration involved basic exploratory data analysis, including feature selection and outlier detection.  We then fit a number of classic machine learning models to our data, and found one that performed optimally given our environment set up.  
+In this project, we explored email statistics and financial compensations for a number of Enron executives, in order to predict "persons of interests" that may be associated with the famous Enron Scandal.  Our data exploration involved basic exploratory data analysis, including feature selection and outlier detection.  We then fit a number of classic machine learning models to our data, and found one that performed optimally given our environment set up. 
+
+This project was interesting as it applied classic machine learning techniques to a small yet relevant dataset from the real world.  We were able to work through dubious features and data and apply tried and true algorithms to our dataset, yielding interesting and valuable results. 
 
 ### References
 
