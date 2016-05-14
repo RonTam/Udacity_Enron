@@ -135,5 +135,5 @@ In this project, we explored email statistics and financial compensations for a 
 
 I hereby confirm that this submission is my work. I have cited above the origins of any parts of the submission that were taken from Websites, books, forums, blog posts, github repositories, etc.
 
-*[sklearn documentation](http://scikit-learn.org/stable/documentation.html)
-*[Enron Scandal](https://en.wikipedia.org/wiki/Enron_scandal)
+* [sklearn documentation](http://scikit-learn.org/stable/documentation.html)
+* [Enron Scandal](https://en.wikipedia.org/wiki/Enron_scandal)
