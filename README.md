@@ -1,7 +1,9 @@
 # Enron Person Of Interest Prediction
 *author: Ron Tam*
-
 *contact: ron.ty.tam@gmail.com*
+
+*Note: For the jupyter notebook, see [here](https://github.com/RonTam/Udacity_Enron/blob/master/final_project/Enron_Project.ipynb)*
+*To generate the pickled files of the model, dataset, and features used, run [poi_id.py](https://github.com/RonTam/Udacity_Enron/blob/master/final_project/poi_id.py)
 
 ### Introduction
 Once a darling of Wall Street, Enron is better known today as a symbol of corporate fraud and corruption.  The scandal highlighted the dangers of creative accounting practices and pointed a spotlight at regulators to find ways to avoid future catastrophies from corporate misdeeds.
