@@ -10,7 +10,7 @@
 ### Introduction
 Once a darling of Wall Street, Enron is better known today as a symbol of corporate fraud and corruption.  The scandal highlighted the dangers of creative accounting practices and pointed a spotlight at regulators to find ways to avoid future catastrophies from corporate misdeeds.
 
-As a consequence of the investigations into Enron, federal regulators released mountains of information (typically confidential) regarding the activities of company executives prior to the firm's dissolution.  In this project, we will study a subset of these documents, to see whether we can identify a "person of interest" based on data gathered on a number of company executives.  We will build a number of machine learning models to predict whether an individual is considered a person of interest, and analyze the accuracy of our results.  Having a good model may pave the way of identifying potential "Enrons" in the future, as corporate accounting continue to get increasingly more complex in our evolving financial landscape.
+As a consequence of the investigations into Enron, federal regulators released mountains of information (typically confidential) regarding the activities of company executives prior to the firm's dissolution.  In this project, we will study a subset of these documents, to see whether we can identify a "person of interest" based on data gathered on a number of company executives.  We will build a number of machine learning models to predict whether an individual is considered a person of interest, and analyze the accuracy of our results.  Having a good model may pave the way of identifying potential "Enrons" in the future, as corporate accounting continue to get increasingly more complex in our evolving financial landscape.  Additionally, machine learning can help us effectively communicate an idea or prediction to an audience, regardless of the audience's level of exposure to advanced mathematics or computer science.
 
 ### Data Introduction
 The data that we will explore in this project is constructed as a dictionary of feature values, where each key of the dictionary is represented by one of 146 Enron executives.  The initial feature set consists of 20 independent variables, comprising of both financial data as well as email statistics of the individuals named.  A boolean valued variable: "poi", captures the true labeled status of each person.
@@ -47,7 +47,33 @@ Given no domain knowledge on the Enron scandal (beyond information that is readi
 #### Addressing Outliers and Bad Features
 The keys `TOTAL` and `THE TRAVEL AGENCY IN THE PARK` do not appear to be actual people (scatterplots of values from `TOTAL` can confirm it as an aberration), and are thus removed from our data.  Additionally, an executive named `LOCKHART EUGENE E` contains an empty dictionary with no usable information, and as such that point is also removed.
 
-Next, we observe that our dataset contains many `NaN` values, which will have to be addressed prior to modeling.  For the sake of simplicity, we replace all `NaN` with `0`, while acknowledging that more sophisticated methods of imputation might have resulted in accuracy gains in our modeling.
+Next, we observe that our dataset contains many `NaN` values, which will have to be addressed prior to modeling.  We first list out the number of missing values below:  
+
+| Feature_Names             | Count of Nulls    | Percentage Null |
+| ------------------------- |-------------------| ----------------|
+| salary                    |   49              | 0.3426          |
+| to_messages               |   57              | 0.3986          |
+| deferral_payments         |   105             | 0.7342          |
+| total_payments            |   20              | 0.1398          |
+| exercised_stock_options   |   42              | 0.2937          |
+| bonus                     |   62              | 0.4335          |
+| restricted_stock          |   34              | 0.2377          |
+| shared_receipt_with_poi   |   57              | 0.3986          |
+| restricted_stock_deferred |   126             | 0.8811          |
+| total_stock_value         |   18              | 0.1258          |
+| expenses                  |   49              | 0.3426          |
+| loan_advances             |   140             | 0.9790          |
+| from_messages             |   57              | 0.3986          |
+| other                     |   52              | 0.3636          |
+| from_this_person_to_poi   |   57              | 0.3986          |
+| poi                       |   0               | 0.0000          |
+| director_fees             |   127             | 0.8881          |
+| deferred_income           |   95              | 0.6643          |
+| long_term_incentive       |   78              | 0.5454          |
+| email_address             |   32              | 0.2237          |
+| from_poi_to_this_person   |   57              | 0.3986          |
+
+We see that loan advances represent the field with the highest number of nulls.  We can conceivably believe that many high paying executives may not require a loan advance from the company.  Similarly, only a subset of executives should be expected to receved stock deferrals with restrictions (another field representing high null count).  For the sake of simplicity, we replace all `NaN` with `0`, while acknowledging that more sophisticated methods of imputation might have resulted in accuracy gains in our modeling.
 
 We made a judgement to remove `email_address` from our feature set, as a cursory review showed that the field largely represent some permutation of the executive's name.  Given that we are not using NLP as a part of this exercise, we have deleted that feature from the data.
 
