@@ -144,7 +144,10 @@ We do no feature scaling for this dataset.  As will be demonstrated later, featu
 
 ### Model Building, Validation, And Analysis
 
-A number of algorithms were attempted in the search for the optimal model.  To parameterize our model, we use Grid Search Cross Validation to exhaustively search through possible hyperparameters.  The results of our testing is presented below:
+A number of algorithms were attempted in the search for the optimal model.  To parameterize our model, we use Grid Search Cross Validation to exhaustively search through possible hyperparameters.  This method of model tuning allowed us to test numerous values on the parameters and select the one that yielded the best result.  For example, we tested our Random Forest with different Max Depths, as well as the number of samples at each split, and the number of samples at each leaf.  We also tested the scoring criterion at each node split by training on both the Gini Index as well as Entropy for information gain.  Likewise, we tuned our Logistic Regression against different C values, penalty metrics, and class weights in order to find the model that gave the best performance.
+
+
+The results of our testing is presented below:
 
 | Algorithm        		  | Accuracy      |	Precision 	  | Recall   	|
 | ----------------------|---------------|---------------|-----------|
@@ -152,6 +155,8 @@ A number of algorithms were attempted in the search for the optimal model.  To p
 | Logistic Regression	  | 0.79367    	  | 0.31490		    | 0.72900   |
 | Naive Bayes			      | 0.79311 		  | 0.01023		    | 0.00900	  |
 | AdaBoost				      | 0.81122 		  | 0.21973 		  | 0.27400 	|
+
+
 
 Before we go into more detail about these numbers, it's first prudent to explain how the numbers were achieved.  We relied on the algorithm given by tester.py, which uses a Stratified Shuffle Split for Cross Validation.  The folds (1000) are made by preserving the percentage of samples for each class, meaning that we can ensure a small number of actual persons of interest in each fold we use for training and testing.  This is important in cases where there exist a large imbalance between the classified labels in the data (as we have in this project). In addition, the splitting factor uses a randomized permutation across the folds.  
 
