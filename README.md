@@ -86,6 +86,8 @@ To give a better semblence of normalization between some of these numbers, I cre
 * `poi_from_ratio` : ratio of incoming messages from a person of interest, or `from_poi_to_this_person` divided by `from_messages`.
 *  `poi_to_ratio` : ratio of outgoing messages to a person of interest, or `from_this_person_to_poi` divided by `to_messages`.
 
+These created features comprise of ratios of existing features already in the data.  Instead of studying the amount of deferral payments, we felt that the proportion of total payments deferred is more important, as executives are compensated differently.  Along those same notes, the number of incoming messages are less informative than understanding the ratio of incoming to outgoing messages.  Finally, instead of looking at the actual numbers of incoming and outgoing messages from POIs, it may be more informative to understand the proportion of total messages that interact with POIs, whether incoming or outgoing.
+
 #### Feature Selection
 
 A number of feature selection techniques were considered for this project.  First, we ran a Random Forest Classifier over our data and used the resulting model to discover feature importance.  As a robust emsemble method, Random Forest does not require feature scaling and is very flexible in dealing with potentially messay feature relationships, as such it is often a good plug-and-play model for feature selection or performance benchmarking.  Limiting each node to a square root of params, the resulting order of important features are listed below:
@@ -93,35 +95,39 @@ A number of feature selection techniques were considered for this project.  Firs
 
 | Feature_Names        		| Feature_Importance    |
 | -----------------------	|:---------------------:|
-| other      				| 0.107346				|
-| total_stock_value    		| 0.090469				|
-| expenses	 		     	| 0.080059	 			|
-| message_ratio				| 0.072827				|		
-| bonus						| 0.072018				|
-| exercised_stock_options	| 0.060140				|
-| salary					| 0.058832				|
-| shared_receipt_with_poi	| 0.056311				|
-| deferred_income			| 0.051368				|
-| restricted_stock 			| 0.049847				|	
-| total_payments 			| 0.048884				|
-| to_messages 				| 0.045440				|
-| deferred_ratio			| 0.038757				|
-| long_term_incentive		| 0.033897				|
-| from_poi_to_this_person 	| 0.028768				|
-| poi_to_ratio				| 0.028362				|
-| poi_from_ratio			| 0.024700				|
-| from_messages				| 0.022333				|		
-| from_this_person_to_poi	| 0.019868				|
-| deferral_payments			| 0.009680 				|
-| director_fees				| 0.000092				|
-| restricted_stock_deferred | 0.000000 				|
-| loan_advances				| 0.000000 				|
+| other      				         | 0.107346				  |
+| total_stock_value    		   | 0.090469				  |
+| expenses	 		     	       | 0.080059	 			  |
+| message_ratio				       | 0.072827				  | 		
+| bonus						           | 0.072018				  |
+| exercised_stock_options	   | 0.060140				  |
+| salary					           | 0.058832				  |
+| shared_receipt_with_poi	   | 0.056311				  |
+| deferred_income			       | 0.051368				  |
+| restricted_stock 			     | 0.049847				  |	
+| total_payments 			       | 0.048884				  |
+| to_messages 				       | 0.045440				  |
+| deferred_ratio			       | 0.038757				  |
+| long_term_incentive		     | 0.033897				  |
+| from_poi_to_this_person    | 0.028768				  |
+| poi_to_ratio				       | 0.028362				  |
+| poi_from_ratio			       | 0.024700				  |
+| from_messages				       | 0.022333				  |  		
+| from_this_person_to_poi	   | 0.019868				  |
+| deferral_payments			     | 0.009680				  |
+| director_fees				       | 0.000092				  |
+| restricted_stock_deferred  | 0.000000				  |
+| loan_advances				       | 0.000000				  |
 
 Taking the ordered list, we randomly chose a subset of the most important features for our model build.  This process is often more art than science, and numerous attempts were made to find some optimal dividing point for features.  While the ensuing performance was relatively decent, we could not find a suitable combination of models using this feature ordering that achieved a recall and precision above 0.3 (a goal that we had set as part of this project).  As such, we could not use the method for choosing the optimal features.
 
-We use a number of more sophisticated techniques to find better features for our model, the details of which can be found in the accompanying jupyter notebook.  These included using SelectKBest algorithms, feature transformations using PCA, and a combination of SelectKBest and PCA using FeatureUnion, with a pipeline that exhustively searched for the best features via Grid Search Cross Validation.  While considerably more time consuming, the overal precisions continued to drift slightly below 0.3  (it is very well feasible that these features would work with more sophisticated models like XGBoost, but for the sake of feature selection the resulting precisions/recalls were based off of simpler classification models).
+We use a number of more sophisticated techniques to find better features for our model, the details of which can be found in the accompanying jupyter notebook.  These included using SelectKBest algorithms, feature transformations using PCA, and a combination of SelectKBest and PCA using FeatureUnion, with a pipeline that exhustively searched for the best features via Grid Search Cross Validation.  While considerably more time consuming, the overall precisions continued to drift slightly below 0.3  (it is very well feasible that these features would work with more sophisticated models like XGBoost, but for the sake of feature selection the resulting precisions/recalls were based off of simpler classification models).
 
-Finally, I split the features up to consider messages versus financials.  Interestingly, both sets of features tested well using basic ML models.  In particular, I found very strong performance using only the features from email messages, while completely ignoring the numbers from the financials.  As such, the resulting feature set that I used for model building contained the following features:
+Finally, we split the features up to consider messages versus financials.  We wanted to better understand whether value was coming from the email information, or the financial information.  We hoped that this would give us more information on the overall class of features that can make the best predictions.
+
+Interestingly, both sets of features tested well using basic ML models.   When we ran the features using only financials information, the numbers were also strong but still below the 0.30 threshold needed for Precision and Recall.  However, we found very strong performance using only the features from email messages, while completely ignoring the numbers from the financials. These features were able to exceed the 0.30 threshold on both Precision and Recall using simple ML models.
+
+As such, the resulting feature set that I used for model building contained the following features:
 
 * `to_messages`
 * `shared_receipt_with_poi`
