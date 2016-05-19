@@ -49,10 +49,10 @@ features_list = ['poi',
 #                'deferred_income',
 #		'deferred_ratio',
 #                'long_term_incentive']
-                'from_poi_to_this_person',
-                'message_ratio',
-                'poi_from_ratio',
-                'poi_to_ratio']
+                'from_poi_to_this_person']
+#                'message_ratio',
+#                'poi_from_ratio',
+#                'poi_to_ratio']
 	
 ### Load the dictionary containing the dataset
 
@@ -67,11 +67,15 @@ for i in bad_keys:
         del data_dict[i]
 
 df = pd.DataFrame.from_dict(data_dict,orient='index')
-df = df.replace('NaN',-999)
+df = df.replace('NaN',np.nan)
+df = df.fillna(0)
 df['message_ratio'] = df['to_messages']/df['from_messages']
 df['poi_from_ratio'] = df['from_poi_to_this_person']/df['from_messages']
 df['poi_to_ratio'] = df['from_this_person_to_poi']/df['to_messages']
 df['deferred_ratio'] = df['deferral_payments']/df['total_payments']
+df = df.replace('NaN',np.nan)
+df = df.fillna(0)
+df = df.replace('inf',0)
 
 data_dict = df.T.to_dict()
 
@@ -90,7 +94,7 @@ labels, features = targetFeatureSplit(data)
 ### Note that if you want to do PCA or other multi-stage operations,
 ### you'll need to use Pipelines. For more info:
 ### http://scikit-learn.org/stable/modules/pipeline.html
-
+	
 clf = LogisticRegression(class_weight='balanced', n_jobs=-1, C=100000000000L, penalty ='l2', random_state=42)
 
 ####################################################################

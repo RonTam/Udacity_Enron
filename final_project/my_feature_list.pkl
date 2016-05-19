@@ -11,10 +11,4 @@ aS'from_this_person_to_poi'
 p5
 aS'from_poi_to_this_person'
 p6
-aS'message_ratio'
-p7
-aS'poi_from_ratio'
-p8
-aS'poi_to_ratio'
-p9
 a.
