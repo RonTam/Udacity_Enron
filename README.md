@@ -138,18 +138,20 @@ As such, the resulting feature set that I used for model building contained the 
 * `poi_from_ratio`
 * `poi_to_ratio`
 
+Before we detailed modeling and analysis, note that `message_ratio`, `poi_from_ratio`, and `poi_to_ratio`, were features that we created in an earlier section.  It turns out that these new features did not drastically improve our output.  In fact, had we removed these three features, we would have gotten a higher Recall Value on our Logistic Regression and a similar Precision Value.  As such, we have ommitted these features from our model. 
+
 We do no feature scaling for this dataset.  As will be demonstrated later, feature scaling is not required for Logistic Regression.  Furthermore, the added ratios give more normalized depth to the absolute messages data.
 
 ### Model Building, Validation, And Analysis
 
 A number of algorithms were attempted in the search for the optimal model.  To parameterize our model, we use Grid Search Cross Validation to exhaustively search through possible hyperparameters.  The results of our testing is presented below:
 
-| Algorithm        		  | Accuracy      |	Precision 	| Recall   	|
+| Algorithm        		  | Accuracy      |	Precision 	  | Recall   	|
 | ----------------------|---------------|---------------|-----------|
-| Random Forest			    | 0.86027 		| 0.34328     	| 0.05750	|		
-| Logistic Regression	  | 0.80360    	| 0.34095		| 0.50700 	|
-| Naive Bayes			      | 0.77240 		| 0.27441		| 0.43000	|
-| AdaBoost				      | 0.83193 		| 0.29633 		| 0.18950 	|
+| Random Forest			    | 0.86300 		  | 0.16619     	| 0.05800	  |		
+| Logistic Regression	  | 0.79367    	  | 0.31490		    | 0.72900   |
+| Naive Bayes			      | 0.79311 		  | 0.01023		    | 0.00900	  |
+| AdaBoost				      | 0.81122 		  | 0.21973 		  | 0.27400 	|
 
 Before we go into more detail about these numbers, it's first prudent to explain how the numbers were achieved.  We relied on the algorithm given by tester.py, which uses a Stratified Shuffle Split for Cross Validation.  The folds (1000) are made by preserving the percentage of samples for each class, meaning that we can ensure a small number of actual persons of interest in each fold we use for training and testing.  This is important in cases where there exist a large imbalance between the classified labels in the data (as we have in this project). In addition, the splitting factor uses a randomized permutation across the folds.  
 
@@ -159,7 +161,7 @@ As mentioned before, accuracy score does not represent a suitable metric for mea
 
 Now let's finally look at our results.  While Random Forest yielded the best total accuracy, it's recall metric was very poor.  Alternatively, Logistic Regression performed very well with our data.  We ran a number of parameter permutations through Grid Search and found an optimal model using a C = 100000000000, class_weight = balanced, and a penalty measured by l2 norm. 
 
-Note that `message_ratio`, `poi_from_ratio`, and `poi_to_ratio`, were features that we created in an earlier section.  It turns out that these new features did not drastically affect our output.  In fact, had we removed these three features, we would have gotting a slightly higher Recall Value on our Logistic Regression (0.59650) and a slightly lower Precision Value.  As such, we likely could have omitted these features and received a very similar result. 	 		     	
+ 		     	
 
 ### Conclusion
 
