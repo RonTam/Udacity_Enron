@@ -8,7 +8,7 @@
 *To generate the pickled files of the model, dataset, and features used, run [poi_id.py](https://github.com/RonTam/Udacity_Enron/blob/master/final_project/poi_id.py)*
 
 ### Introduction
-Once a darling of Wall Street, Enron is better known today as a symbol of corporate fraud and corruption.  The scandal highlighted the dangers of creative accounting practices and pointed a spotlight at regulators to find ways to avoid future catastrophies from corporate misdeeds.
+Once a darling of Wall Street, Enron is better known today as a symbol of corporate fraud and corruption.  The [scandal](https://en.wikipedia.org/wiki/Enron_scandal) highlighted the dangers of creative accounting practices and pointed a spotlight at regulators to find ways to avoid future catastrophies from corporate misdeeds.
 
 As a consequence of the investigations into Enron, federal regulators released mountains of information (typically confidential) regarding the activities of company executives prior to the firm's dissolution.  In this project, we will study a subset of these documents, to see whether we can identify a "person of interest" based on data gathered on a number of company executives.  We will build a number of machine learning models to predict whether an individual is considered a person of interest, and analyze the accuracy of our results.  Having a good model may pave the way of identifying potential "Enrons" in the future, as corporate accounting continue to get increasingly more complex in our evolving financial landscape.  Additionally, machine learning can help us effectively communicate an idea or prediction to an audience, regardless of the audience's level of exposure to advanced mathematics or computer science.
 
@@ -86,7 +86,7 @@ To give a better semblence of normalization between some of these numbers, I cre
 * `poi_from_ratio` : ratio of incoming messages from a person of interest, or `from_poi_to_this_person` divided by `from_messages`.
 *  `poi_to_ratio` : ratio of outgoing messages to a person of interest, or `from_this_person_to_poi` divided by `to_messages`.
 
-These created features comprise of ratios of existing features already in the data.  Instead of studying the amount of deferral payments, we felt that the proportion of total payments deferred is more important, as executives are compensated differently.  Along those same notes, the number of incoming messages are less informative than understanding the ratio of incoming to outgoing messages.  Finally, instead of looking at the actual numbers of incoming and outgoing messages from POIs, it may be more informative to understand the proportion of total messages that interact with POIs, whether incoming or outgoing.
+These created features comprise of ratios of existing features already in the data.  Instead of studying the amount of deferral payments, we felt that the proportion of total payments deferred is more important, as executives are compensated differently.  Along those same notes, the number of incoming messages are less informative than understanding the ratio of incoming to outgoing messages.  Finally, instead of looking at the actual numbers of incoming and outgoing messages from POIs, it may be more informative to understand the proportion of total messages that interact with POIs, whether incoming or outgoing.  We will discuss in our analysis how these new features affected our final results.
 
 #### Feature Selection
 
@@ -144,20 +144,22 @@ We do no feature scaling for this dataset.  As will be demonstrated later, featu
 
 A number of algorithms were attempted in the search for the optimal model.  To parameterize our model, we use Grid Search Cross Validation to exhaustively search through possible hyperparameters.  The results of our testing is presented below:
 
-| Algorithm        		| Accuracy      |	Precision 	| Recall   	|
+| Algorithm        		  | Accuracy      |	Precision 	| Recall   	|
 | ----------------------|---------------|---------------|-----------|
-| Random Forest			| 0.86027 		| 0.34328     	| 0.05750	|		
-| Logistic Regression	| 0.80360    	| 0.34095		| 0.50700 	|
-| Naive Bayes			| 0.77240 		| 0.27441		| 0.43000	|
-| AdaBoost				| 0.83193 		| 0.29633 		| 0.18950 	|
+| Random Forest			    | 0.86027 		| 0.34328     	| 0.05750	|		
+| Logistic Regression	  | 0.80360    	| 0.34095		| 0.50700 	|
+| Naive Bayes			      | 0.77240 		| 0.27441		| 0.43000	|
+| AdaBoost				      | 0.83193 		| 0.29633 		| 0.18950 	|
 
-Before we go into more detail about these numbers, it's first prudent to explain how the numbers were achieved.  We relied on the algorithm given by tester.py, which uses a Stratified Shuffle Split for Cross Validation.  The folds (1000) are made by preserving the percentage of samples for each class, meaning that we can ensure a small number of actual persons of interest in each fold we use for training and testing.  This is important in cases where there exist a large imbalance between the classified labels in the data (as we have in this project).  In addition, the splitting factor uses a randomized permutation across the folds.  
+Before we go into more detail about these numbers, it's first prudent to explain how the numbers were achieved.  We relied on the algorithm given by tester.py, which uses a Stratified Shuffle Split for Cross Validation.  The folds (1000) are made by preserving the percentage of samples for each class, meaning that we can ensure a small number of actual persons of interest in each fold we use for training and testing.  This is important in cases where there exist a large imbalance between the classified labels in the data (as we have in this project). In addition, the splitting factor uses a randomized permutation across the folds.  
 
 For example, given a 5-Fold Stratified Shuffle Split, the data will be trained on 4 randomized permutation folds, in which each fold randomly contains one fifth of the data, while preserving as much as possible the poi to non-poi ratio within that fold.  Those 4 folds will then be used to fit our modeled algorithm, and the fifth fold to be used for prediction.  This process iterates through with each fold representing the test set once, and the resulting accuracies are averaged into the scores we see above.  
 
 As mentioned before, accuracy score does not represent a suitable metric for measuring the performance of our models.  As such we rely on Precision and Recall.  Precision is the number of True Positives (the number of POIs correctly identified) divided by the total number of POIs labeled from our model (TP + FP).  Alternatively, recall represents the number of True Positives divided by the number of actual POIs from our data (TP + FN).  Together, these often give a better depiction on the strength of a model when the classes are strongly imbalanced.
 
-Now let's finally look at our results.  While Random Forest yielded the best total accuracy, it's recall metric was very poor.  Alternatively, Logistic Regression performed very well with our data.  We ran a number of parameter permutations through Grid Search and found an optimal model using a C = 100000000000, class_weight = balanced, and a penalty measured by l2 norm. 	 		     	
+Now let's finally look at our results.  While Random Forest yielded the best total accuracy, it's recall metric was very poor.  Alternatively, Logistic Regression performed very well with our data.  We ran a number of parameter permutations through Grid Search and found an optimal model using a C = 100000000000, class_weight = balanced, and a penalty measured by l2 norm. 
+
+Note that `message_ratio`, `poi_from_ratio`, and `poi_to_ratio`, were features that we created in an earlier section.  It turns out that these new features did not drastically affect our output.  In fact, had we removed these three features, we would have gotting a slightly higher Recall Value on our Logistic Regression (0.59650) and a slightly lower Precision Value.  As such, we likely could have omitted these features and received a very similar result. 	 		     	
 
 ### Conclusion
 
