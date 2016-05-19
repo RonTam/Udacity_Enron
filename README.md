@@ -47,7 +47,7 @@ Given no domain knowledge on the Enron scandal (beyond information that is readi
 #### Addressing Outliers and Bad Features
 The keys `TOTAL` and `THE TRAVEL AGENCY IN THE PARK` do not appear to be actual people (scatterplots of values from `TOTAL` can confirm it as an aberration), and are thus removed from our data.  Additionally, an executive named `LOCKHART EUGENE E` contains an empty dictionary with no usable information, and as such that point is also removed.
 
-Next, we observe that our dataset contains many `NaN` values, which will have to be addressed prior to modeling.  For the sake of simplicity, we replace all `NaN` with `-999`, while acknowledging that more sophisticated methods of imputation might have resulted in accuracy gains in our modeling.
+Next, we observe that our dataset contains many `NaN` values, which will have to be addressed prior to modeling.  For the sake of simplicity, we replace all `NaN` with `0`, while acknowledging that more sophisticated methods of imputation might have resulted in accuracy gains in our modeling.
 
 We made a judgement to remove `email_address` from our feature set, as a cursory review showed that the field largely represent some permutation of the executive's name.  Given that we are not using NLP as a part of this exercise, we have deleted that feature from the data.
 
